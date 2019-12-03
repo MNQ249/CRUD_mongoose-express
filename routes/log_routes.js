@@ -122,7 +122,7 @@ router.get('/logs/:id', (req, res) => {
 */
 
 router.put('/logs/:id', (req,res)=>{
-    Log.findByIdAndUpdate(req.params.id, (error, log)=>{
+    Log.findById(req.params.id, (error, log)=>{
         if(!error){
             if(log){
                 log.update(req.body, (error, log)=>{
@@ -149,40 +149,37 @@ router.put('/logs/:id', (req,res)=>{
 
 
 
+/** 
+ * Action:         DESTROY
+ * Method:         DELETE
+ * URI:            /logs/:id
+ * Description: Delete log by ID
+*/
 
-// /** 
-//  * Action:         DESTROY
-//  * Method:         DELETE
-//  * URI:            /fruits/:id
-//  * Description: Delete fruit by ID
-// */
-
-// router.delete('fruits/:id', (req, res)=>{
-//     Fruit.findById(req.params.id, (error, fruit)=>{
-//         if(!error){
-//             if(fruit){
-//                 fruit.remove( (error, fruit)=>{
-//                     if(!error){
-//                         res.status(204).end();
-//                     }else{
-//                         res.status(500).json({error: error})
-//                     }
-//                 })
-//             }else{
-//                  // if there is no fruit with a matching id
-//                  res.status(404).json({
-//                     error: {
-//                         name: 'DocumentNotFoundError',
-//                         message: 'The provided id doesn\'t match any document'
-//                     }
-//                 })
-//             }
-//         }else{
-//             res.status(500).json({error:error});
-//         }
-//     })
-// })
-
+router.delete('/logs/:id', (req, res) => {
+    Log.findById(req.params.id, (error, log) => {
+        if (!error) {
+            if (log) {
+                log.remove((error, log) => {
+                    if (!error) {
+                        res.status(204).end();
+                    } else {
+                        res.status(500).json({ error: error })
+                    }
+                })
+            } else {
+                res.status(404).json({
+                    error: {
+                        name: 'DocumentNotFoundError',
+                        message: 'The provided id doesn\'t match any document'
+                    }
+                })
+            }
+        } else {
+            res.status(500).json({ error: error })
+        }
+    })
+})
 
 
 
